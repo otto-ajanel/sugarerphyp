@@ -16,15 +16,14 @@ use App\Presentation\http\Controller\Api\UserController;
 use Hyperf\HttpServer\Router\Router;
 
 
-Router::addRoute(['GET', 'POST', 'HEAD'], '/api-hyperf', [UserController ::class,'index']);
-Router::post('/login', [AuthController::class, 'login']);
+Router::post('/api/login', [AuthController::class, 'login']);
  
 Router::get('/favicon.ico', function () {
     return '';
 });
 
 Router::addGroup("/api/v1", function(){
-
+    
     Router::get("/user", function(){
         return ["messa"=>"Hello user with token"];
     });

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Presentation\http\Controller\Api;
@@ -23,13 +24,21 @@ class AuthController
     ) {
         $this->userService = $userService;
         $this->req = $request;
-        $this->res= $response;
+        $this->res = $response;
     }
 
-    public function login($email, $password): PsrRes
+    public function login(): PsrRes
     {
-        $data = Db::connection('pgsql')->select('select * from users');
+        try {
+            $reqData = $this->req->all();
+            $dataUser  = $this->userService->loginService($reqData['email'], $reqData['password']);
+            if ($dataUser == null) {
+                return $this->res->json(["Message" => "Not found user"])->withStatus(404);
+            }
 
-        return $this->res->json($data);
+            return $this->res->json($dataUser);
+         } catch (\Throwable $th) {
+            return $this->res->json(["message" => $th])->withStatus(501);
+        } 
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use App\Application\Services\Authservice;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface as HttpResponse;
 use Psr\Container\ContainerInterface;
@@ -29,17 +30,24 @@ class AuthMiddlewareToken implements MiddlewareInterface
      */
     protected $response;
 
-    public function __construct(ContainerInterface $container, HttpResponse $response, RequestInterface $request)
+    private Authservice $authService;
+    public function __construct(ContainerInterface $container, HttpResponse $response, RequestInterface $request, Authservice $authService)
     {
         $this->container = $container;
         $this->response = $response;
         $this->request = $request;
+        $this->authService =$authService;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // According to the specific business judgment logic, it is assumed that the token carried by the user is valid here.
-        $isValidToken = true;
+
+        $headerToke = $this->request->getHeaderLine('authorization');
+
+        $isValidToken = $this->authService->valideToken(str_replace('Bearer ', '',$headerToke));
+
+        
         if ($isValidToken) {
             return $handler->handle($request);
         }
