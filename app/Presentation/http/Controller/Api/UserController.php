@@ -19,6 +19,7 @@ class UserController
 
     public function index()
     {
-        return ['Data'=>"Hello  woerls " ];
-    }
+        return $this->userService->getAllUsers();
+
+}
 }

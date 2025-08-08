@@ -3,6 +3,7 @@
 namespace App\Application\Services;
 
 use App\Infrastructure\Persistence\Eloquent\Models\User;
+use Hyperf\DbConnection\Db;
 
 class UserService {
     private Authservice $authService;
@@ -35,4 +36,9 @@ class UserService {
 
     }
 
+    public function getAllUsers($perPage=10, $noPage =1){
+        $dataUsers= User::query()
+        ->paginate($perPage, ['*'], 'page', $noPage);
+        return $dataUsers;
+    }
 }

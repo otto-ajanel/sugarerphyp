@@ -24,9 +24,9 @@ Router::get('/favicon.ico', function () {
 
 Router::addGroup("/api/v1", function(){
     
-    Router::get("/user", function(){
-        return ["messa"=>"Hello user with token"];
-    });
+    Router::get("/user",[UserController::class, 'index']);
+
+    
 },[
     'middleware'=>[AuthMiddlewareToken::class]
 ]);
