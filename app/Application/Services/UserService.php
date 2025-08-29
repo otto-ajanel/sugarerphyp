@@ -41,4 +41,8 @@ class UserService {
         ->paginate($perPage, ['*'], 'page', $noPage);
         return $dataUsers;
     }
+
+    public function getPermissionsByUser($userId){
+        return User::find($userId)->permissions;
+    }
 }

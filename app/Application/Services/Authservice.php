@@ -3,15 +3,14 @@
 namespace App\Application\Services;
 
 use DateTimeImmutable;
+use Hyperf\Context\Context;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\JwtFacade;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
-use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
-use Lcobucci\JWT\Validation\Constraint\ValidAt;
-use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
+
 
 class Authservice
 {
@@ -30,32 +29,36 @@ class Authservice
                 DateTimeImmutable $issuedAt
             ): Builder => $builder
                 //->issuedBy('https://api.my-awesome-app.io')
-                ->withClaim("data",$data)
+                ->withClaim("data", $data)
                 ->permittedFor('https://client-app.io')
-                //->expiresAt($issuedAt->modify('+10 minutes'))
+            //->expiresAt($issuedAt->modify('+10 minutes'))
         );
 
         return $token->toString();
     }
 
-    public function valideToken($tokenString){
-         $key = InMemory::base64Encoded(
-        'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB'
-    );
-    
-    $config = Configuration::forSymmetricSigner(new Sha256(), $key);
-    
-    //try {
+    public function valideToken($tokenString)
+    {
+        $key = InMemory::base64Encoded(
+            'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB'
+        );
+
+        $config = Configuration::forSymmetricSigner(new Sha256(), $key);
+
+        //try {
         $token = $config->parser()->parse($tokenString);
-        
+
         // Constraints personalizadas
         $constraints = [
             new SignedWith($config->signer(), $config->signingKey())
         ];
-        
+
         $config->validator()->assert($token, ...$constraints);
+        $userData = $token->claims()->get('data');
+        Context::set('userData', $userData);
+        
         return true;
-      /*   
+        /*   
     } catch (RequiredConstraintsViolated $e) {
         // Token inválido
         return false;
@@ -64,5 +67,5 @@ class Authservice
         return true;
     }
     */
-    } 
+    }
 }

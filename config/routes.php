@@ -26,6 +26,8 @@ Router::addGroup("/api/v1", function(){
     
     Router::get("/user",[UserController::class, 'index']);
 
+    Router::get("/permissionsbyuser",[UserController::class, 'permissionsByUser']);
+
     
 },[
     'middleware'=>[AuthMiddlewareToken::class]
