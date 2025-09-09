@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Eloquent\Models;
 
-use Hyperf\DbConnection\Model\Model;
+use Hyperf\Database\Model\Model;
 
 /**
  * @property int $id_module 
@@ -12,17 +12,12 @@ use Hyperf\DbConnection\Model\Model;
  * @property string $description 
  * @property string $icon_module 
  */
-class Module extends Model
+class Module extends TenantModel
 {
     /**
      * The table associated with the model.
      */
     protected ?string $table = 'modules';
-
-    /**
-     * The connection name for the model.
-     */
-    protected ?string $connection = 'pgsql';
 
     /**
      * The attributes that are mass assignable.

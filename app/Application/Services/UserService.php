@@ -2,7 +2,9 @@
 
 namespace App\Application\Services;
 
+use App\Infrastructure\Persistence\Eloquent\Models\Module;
 use App\Infrastructure\Persistence\Eloquent\Models\User;
+use Hyperf\Context\Context;
 use Hyperf\DbConnection\Db;
 
 class UserService {
@@ -21,6 +23,7 @@ class UserService {
             'password' =>$password,
             'active'=> true
         ])
+        ->join('tenants', 'tenants.id_tenant', '=', 'users.id_tenant')
         ->first(); 
         
         if($userData==null){
@@ -43,6 +46,11 @@ class UserService {
     }
 
     public function getPermissionsByUser($userId){
-        return User::find($userId)->permissions;
+
+       return  Module::select("*")
+        ->join("menus", "menus.id_module", "modules.id_module")
+        ->join("userpermissions","menus.id_menu","=","userpermissions.id_menu")
+        ->where("userpermissions.id_user", $userId)
+        ->get(); 
     }
 }

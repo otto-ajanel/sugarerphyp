@@ -24,9 +24,10 @@ class UserController
     }
 
     function permissionsByUser(){
+        $userData = Context::get('userData');
+        $data = $this->userService->getPermissionsByUser($userData['id_user']);
 
-
-        return Context::get('userData');// $this->userService->getPermissionsByUser($userId);
+        return $data;
     }
 
 }

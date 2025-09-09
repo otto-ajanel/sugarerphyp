@@ -10,7 +10,7 @@ use Lcobucci\JWT\JwtFacade;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
-
+use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
 
 class Authservice
 {
@@ -45,7 +45,7 @@ class Authservice
 
         $config = Configuration::forSymmetricSigner(new Sha256(), $key);
 
-        //try {
+        try {
         $token = $config->parser()->parse($tokenString);
 
         // Constraints personalizadas
@@ -56,9 +56,9 @@ class Authservice
         $config->validator()->assert($token, ...$constraints);
         $userData = $token->claims()->get('data');
         Context::set('userData', $userData);
-        
+        Context::set('tenant',$userData['name_tenant']);
         return true;
-        /*   
+        
     } catch (RequiredConstraintsViolated $e) {
         // Token inválido
         return false;
@@ -66,6 +66,6 @@ class Authservice
         // Error en el formato del token
         return true;
     }
-    */
+    
     }
 }

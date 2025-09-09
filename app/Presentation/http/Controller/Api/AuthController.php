@@ -32,6 +32,7 @@ class AuthController
         try {
             $reqData = $this->req->all();
             $dataUser  = $this->userService->loginService($reqData['email'], $reqData['password']);
+             
             if ($dataUser == null) {
                 return $this->res->json(["Message" => "Not found user"])->withStatus(404);
             }
