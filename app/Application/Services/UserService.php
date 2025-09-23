@@ -39,7 +39,9 @@ class UserService {
 
     }
 
-    public function getAllUsers($perPage=10, $noPage =1){
+    public function getAllUsers($reqData){
+        $perPage= $reqData['perPage'] ?? 10;
+        $noPage = $reqData['noPage'] ?? 1;
         $dataUsers= User::query()
         ->paginate($perPage, ['*'], 'page', $noPage);
         return $dataUsers;
