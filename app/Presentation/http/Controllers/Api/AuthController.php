@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Presentation\http\Controller\Api;
+namespace App\Presentation\http\Controllers\Api;
 
 use App\Application\Services\UserService;
 use Hyperf\DbConnection\Db;

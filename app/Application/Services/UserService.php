@@ -16,7 +16,6 @@ class UserService {
         $this->authService = $authservice;
     }
 
-    
     public function loginService($email, $password){
        $userData = User::where([
             'email' => $email,
@@ -41,7 +40,7 @@ class UserService {
 
     public function getAllUsers($reqData){
         $perPage= $reqData['perPage'] ?? 10;
-        $noPage = $reqData['noPage'] ?? 1;
+        $noPage = $reqData['page'] ?? 1;
         $dataUsers= User::query()
         ->paginate($perPage, ['*'], 'page', $noPage);
         return $dataUsers;

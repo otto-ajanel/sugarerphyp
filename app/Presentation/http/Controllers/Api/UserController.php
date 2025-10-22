@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\http\Controller\Api;
+namespace App\Presentation\http\Controllers\Api;
 
 use App\Application\Services\UserService;
 use Hyperf\Context\Context;
@@ -30,7 +30,7 @@ class UserController
         $this->res = $response;
     }
 
-    public function index() :PsrRes
+    public function  index() :PsrRes
     {
         try {
             $reqData = $this->req->all();
