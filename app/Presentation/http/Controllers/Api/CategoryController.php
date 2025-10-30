@@ -20,6 +20,7 @@ class CategoryController
         ResponseInterface $response
         )
     {
+        
         $this->categoryService = $categoryService;
         $this->req = $request;
         $this->res = $response;

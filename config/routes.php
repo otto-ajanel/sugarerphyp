@@ -13,6 +13,7 @@ declare(strict_types=1);
 use App\Middleware\AuthMiddlewareToken;
 use App\Presentation\http\Controllers\Api\AuthController;
 use App\Presentation\http\Controllers\Api\CategoryController;
+use App\Presentation\http\Controllers\Api\ProductController;
 use App\Presentation\http\Controllers\Api\UserController;
 use Hyperf\HttpServer\Router\Router;
 
@@ -26,13 +27,11 @@ Router::get('/favicon.ico', function () {
 Router::addGroup("/api/v1", function(){
     
     Router::get("/user",[UserController::class, 'index']);
-
     Router::get("/permissionsbyuser",[UserController::class, 'permissionsByUser']);
-
     Router::get("/categories",[CategoryController::class, 'index']);
-
     Router::post("/createcategory",[CategoryController::class, 'store']);
-    
+    Router::post("/product",[ProductController::class, 'createProduct']);
+    Router::get("/products",[ProductController::class, 'getAllProducts']);
 },[
     'middleware'=>[AuthMiddlewareToken::class]
 ]);

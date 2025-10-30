@@ -13,27 +13,33 @@ use Hyperf\DbConnection\Model\Model;
  * @property int $category_id 
  * @property int $typeproduct_id 
  * @property int $billingpolicy_id 
- * @property int $product_status 
+ * @property int $status_id 
  */
-class Product extends Model
+class Product extends TenantModel
 {
     /**
      * The table associated with the model.
      */
     protected ?string $table = 'products';
 
-    /**
-     * The connection name for the model.
-     */
-    protected ?string $connection = 'pgsql';
+
 
     /**
      * The attributes that are mass assignable.
      */
-    protected array $fillable = [];
+    protected array $fillable = [
+        'product_sku',
+        'product_des',
+        'category_id',
+        'typeproduct_id',
+        'billingpolicy_id',
+        'status_id'
+    ];
 
     /**
      * The attributes that should be cast to native types.
      */
     protected array $casts = ['product_id' => 'integer', 'category_id' => 'integer', 'typeproduct_id' => 'integer', 'billingpolicy_id' => 'integer', 'product_status' => 'integer'];
+    protected string $primaryKey = 'product_id';
+    public bool $timestamps = false;
 }
