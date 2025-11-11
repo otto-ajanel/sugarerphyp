@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use App\Middleware\AuthMiddlewareToken;
+use App\Presentation\http\Controllers\Api\AtributeController;
 use App\Presentation\http\Controllers\Api\AuthController;
 use App\Presentation\http\Controllers\Api\CategoryController;
 use App\Presentation\http\Controllers\Api\ProductController;
@@ -32,6 +33,8 @@ Router::addGroup("/api/v1", function(){
     Router::post("/createcategory",[CategoryController::class, 'store']);
     Router::post("/product",[ProductController::class, 'createProduct']);
     Router::get("/products",[ProductController::class, 'getAllProducts']);
+    Router::get("/atributes",[AtributeController ::class, 'getAllAtributes']);
+    Router::post("/createatribute",[AtributeController ::class, 'createAtribute']);
 },[
     'middleware'=>[AuthMiddlewareToken::class]
 ]);
