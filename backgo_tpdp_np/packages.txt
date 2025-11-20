@@ -1,0 +1,12 @@
+# Lista de dependencias que usaste en tu proyecto Go (añádelas aquí, una por línea).
+# Ejemplos comunes con Fiber:
+# github.com/gofiber/fiber/v2
+# github.com/gofiber/jwt/v3
+# github.com/gofiber/fiber/v2/middleware/cors
+# gorm.io/gorm
+# gorm.io/driver/postgres
+# github.com/joho/godotenv
+# github.com/sirupsen/logrus
+
+# Pega aquí tu lista real de paquetes usados:
+

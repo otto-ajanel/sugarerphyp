@@ -1,0 +1,40 @@
+# .air.toml - CONFIG DEV
+root = "."
+testdata_dir = "testdata"
+tmp_dir = "tmp"
+
+[build]
+  # Comando de build para desarrollo
+  cmd = "go build -o ./tmp/main ."
+  bin = "./tmp/main"
+  
+  # Tiempos optimizados para dev
+  delay = 1000
+  kill_delay = "1s"
+  
+  # Archivos a incluir/excluir
+  include_ext = ["go", "html", "tpl", "tmpl", "js", "css", "json"]
+  exclude_dir = ["tmp", "vendor", "dist", "node_modules", ".git", "coverage"]
+  exclude_file = []
+  
+  # Logs de desarrollo
+  log = "dev-build.log"
+  send_interrupt = true  # Mejor para Fiber
+
+[color]
+  # Colores para mejor visibilidad en dev
+  app = "cyan"
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "blue"
+
+[log]
+  time = true  # Timestamps en logs
+
+[misc]
+  clean_on_exit = true  # Limpiar al salir
+
+[screen]
+  clear_on_rebuild = false  # Mantener logs visibles
+  keep_scroll = true
