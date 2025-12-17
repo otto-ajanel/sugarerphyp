@@ -26,7 +26,7 @@ func main() {
 	// Registrar rutas desde internal/api
 	api.RegisterRoutes(app)
 
-	if err := app.Listen(":3000"); err != nil {
+	if err := app.Listen("0.0.0.0:3000"); err != nil {
 		log.Fatalf("error al iniciar servidor: %v", err)
 	}
 }

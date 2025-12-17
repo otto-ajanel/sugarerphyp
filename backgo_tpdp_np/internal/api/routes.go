@@ -21,5 +21,9 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Post("/product", handlers.CreateProduct)
 	v1.Get("/products", handlers.GetProducts)
 	v1.Get("/atributes", handlers.GetAtributes)
+	v1.Post("/atributes", handlers.CreateAtribute)
 	v1.Post("/createatribute", handlers.CreateAtribute)
+	v1.Get("/atributedetails", handlers.GetAtributeDetail)
+	v1.Post("/createatributedetail", handlers.CreateAtributeDetail)
+
 }
