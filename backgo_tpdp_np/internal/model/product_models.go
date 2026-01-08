@@ -21,11 +21,10 @@ type ProductsPrice struct {
 	PurchaseTax float64 `json:"producprec_purchasetax" gorm:"column:producprec_purchasetax"`
 }
 
-func (ProductsPrice) TableName() string { return "products_price" }
+func (ProductsPrice) TableName() string { return "products_prices" }
 
-// ModuleAviability representa module availability (moduleaviability)
 type ModuleAviability struct {
-	ID        int `json:"id" gorm:"column:id;primaryKey;autoIncrement"`
+	ID        int `json:"modavia_id" gorm:"column:modavia_id;primaryKey;autoIncrement"`
 	ModuleID  int `json:"module_id" gorm:"column:module_id"`
 	ProductID int `json:"product_id" gorm:"column:product_id"`
 }
