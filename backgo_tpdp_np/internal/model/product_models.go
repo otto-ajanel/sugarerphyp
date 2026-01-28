@@ -1,13 +1,14 @@
 package model
 
 type Product struct {
-	ProductID       int    `json:"product_id" gorm:"column:product_id;primaryKey;autoIncrement"`
-	ProductSKU      string `json:"product_sku" gorm:"column:product_sku"`
-	ProductDes      string `json:"product_des" gorm:"column:product_des"`
-	CategoryID      int    `json:"category_id" gorm:"column:category_id"`
-	TypeProductID   int    `json:"typeproduct_id" gorm:"column:typeproduct_id"`
-	BillingPolicyID int    `json:"billingpolicy_id" gorm:"column:billingpolicy_id"`
-	StatusID        int    `json:"status_id" gorm:"column:status_id"`
+	ProductID       int      `json:"product_id" gorm:"column:product_id;primaryKey;autoIncrement"`
+	ProductSKU      string   `json:"product_sku" gorm:"column:product_sku"`
+	ProductDes      string   `json:"product_des" gorm:"column:product_des"`
+	CategoryID      int      `json:"category_id" gorm:"column:category_id"`
+	TypeProductID   int      `json:"typeproduct_id" gorm:"column:typeproduct_id"`
+	BillingPolicyID int      `json:"billingpolicy_id" gorm:"column:billingpolicy_id"`
+	StatusID        int      `json:"status_id" gorm:"column:status_id"`
+	Category        Category `json:"Category" gorm:"foreignKey:CategoryID;references:ID"`
 }
 
 func (Product) TableName() string { return "products" }

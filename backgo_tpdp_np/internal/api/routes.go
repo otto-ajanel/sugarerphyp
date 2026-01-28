@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	"github.com/otto-ajanel/backgo_tpdp_np/internal/api/handlers"
 	"github.com/otto-ajanel/backgo_tpdp_np/internal/middleware"
 )
@@ -25,5 +25,10 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Post("/createatribute", handlers.CreateAtribute)
 	v1.Get("/atributedetails", handlers.GetAtributeDetail)
 	v1.Post("/createatributedetail", handlers.CreateAtributeDetail)
-
+	v1.Post("/uploadproductimage", handlers.UploadProductImage)
+	v1.Get("/companies", handlers.GetCompanies)
+	v1.Get("/stores", handlers.GetStores)
+	v1.Get("/incomes", handlers.GetIncomes)
+	v1.Post("/incomes", handlers.CreateIncome)
+	v1.Get("/suppliers", handlers.GetSuppliers)
 }

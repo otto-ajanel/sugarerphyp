@@ -2,7 +2,10 @@ package service
 
 import (
 	"fmt"
+	"io"
 	"mime/multipart"
+	"os"
+	"path/filepath"
 
 	"github.com/otto-ajanel/backgo_tpdp_np/internal/infra/db"
 	"github.com/otto-ajanel/backgo_tpdp_np/internal/model"
@@ -43,6 +46,55 @@ func (s *ProductPathService) UploadProductImage(req UploadProductImageRequest) (
 		return nil, err
 
 	}
+
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+
+	// If an image file was provided, save it to the `imagenes` dir and update the record
+
+	if req.ImageFile != nil {
+		fmt.Println("Saving image file...")
+		// ensure directory exists
+		dir := "images"
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return nil, fmt.Errorf("create images dir: %w", err)
+		}
+
+		// derive extension from uploaded filename
+		ext := filepath.Ext(req.ImageFile.Filename)
+		if ext == "" {
+			ext = ".img"
+		}
+
+		// build filename using product id and productpath id
+		filename := fmt.Sprintf("product_%d_%d%s", productPath.ProductID, productPath.Product_pathID, ext)
+		dstPath := filepath.Join(dir, filename)
+
+		src, err := req.ImageFile.Open()
+		if err != nil {
+			return nil, fmt.Errorf("open uploaded file: %w", err)
+		}
+		defer src.Close()
+
+		dst, err := os.Create(dstPath)
+		if err != nil {
+			return nil, fmt.Errorf("create destination file: %w", err)
+		}
+		defer dst.Close()
+
+		if _, err := io.Copy(dst, src); err != nil {
+			return nil, fmt.Errorf("save file: %w", err)
+		}
+
+		// update DB record with saved path
+		productPath.ProductPath = dstPath
+		if err := s.repo.SaveProductPath(gdb, productPath); err != nil {
+			return nil, fmt.Errorf("update product path in db: %w", err)
+		}
+	}
+
 	resp := map[string]interface{}{
 		"message": "Imagen subida correctamente",
 	}

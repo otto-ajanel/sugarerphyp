@@ -161,3 +161,35 @@ func (s *ProductService) GetAllProducts() ([]model.Product, error) {
 	}
 	return s.repo.GetAllProducts(gdb)
 }
+
+// GetAllProductsPaginated returns products with pagination. If page or perPage are zero, defaults used: page=1, perPage=10.
+func (s *ProductService) GetAllProductsPaginated(page int, perPage int) (map[string]interface{}, error) {
+	if page < 1 {
+		page = 1
+	}
+	if perPage <= 0 {
+		perPage = 10
+	}
+
+	gdb, err := db.Get()
+	if err != nil {
+		return nil, fmt.Errorf("db connect error: %w", err)
+	}
+
+	products, total, err := s.repo.GetAllProductsPaginated(gdb, page, perPage)
+	if err != nil {
+		return nil, err
+	}
+
+	totalPages := int((total + int64(perPage) - 1) / int64(perPage))
+
+	resp := map[string]interface{}{
+		"products":    products,
+		"page":        page,
+		"per_page":    perPage,
+		"total":       total,
+		"total_pages": totalPages,
+	}
+
+	return resp, nil
+}
