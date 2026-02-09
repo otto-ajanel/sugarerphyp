@@ -193,3 +193,55 @@ func (s *ProductService) GetAllProductsPaginated(page int, perPage int) (map[str
 
 	return resp, nil
 }
+
+func (s *ProductService) GetProductsAviable(page int, perPage int) (map[string]interface{}, error) {
+	if page < 1 {
+		page = 1
+	}
+	if perPage <= 0 {
+		perPage = 10
+	}
+
+	gdb, err := db.Get()
+	if err != nil {
+		return nil, fmt.Errorf("db connect error: %w", err)
+	}
+
+	products, total, err := s.repo.GetProductsPaginatedAviable(gdb, page, perPage)
+	if err != nil {
+		return nil, err
+	}
+
+	totalPages := int((total + int64(perPage) - 1) / int64(perPage))
+
+	resp := map[string]interface{}{
+		"products":    products,
+		"page":        page,
+		"per_page":    perPage,
+		"total":       total,
+		"total_pages": totalPages,
+	}
+
+	return resp, nil
+}
+
+func (s *ProductService) GetImageProduct(productID int) (string, error) {
+	gdb, err := db.Get()
+	if err != nil {
+		return "", fmt.Errorf("db connect error: %w", err)
+	}
+
+	path, err := s.repo.GetImageProduct(gdb, productID)
+	if err != nil {
+		path = "images\\default.jpg"
+	}
+
+	if path == "" {
+		path = "images\\default.jpg"
+	}
+	/* imageByte, err := os.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read image file: %w", err)
+	} */
+	return path, nil
+}

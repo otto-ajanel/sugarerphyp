@@ -20,6 +20,7 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Post("/createcategory", handlers.CreateCategory)
 	v1.Post("/product", handlers.CreateProduct)
 	v1.Get("/products", handlers.GetProducts)
+	v1.Get("/all-products", handlers.GetAllProducts)
 	v1.Get("/atributes", handlers.GetAtributes)
 	v1.Post("/atributes", handlers.CreateAtribute)
 	v1.Post("/createatribute", handlers.CreateAtribute)
@@ -31,4 +32,6 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Get("/incomes", handlers.GetIncomes)
 	v1.Post("/incomes", handlers.CreateIncome)
 	v1.Get("/suppliers", handlers.GetSuppliers)
+	v1.Get("/productsaviable", handlers.GetProductsAviable)
+	v1.Get("/getimageproduct", handlers.GetImageProduct)
 }

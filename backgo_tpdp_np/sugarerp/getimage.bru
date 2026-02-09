@@ -1,0 +1,25 @@
+meta {
+  name: getimage
+  type: http
+  seq: 4
+}
+
+get {
+  url: 127.0.0.1:3000/api/v1/productsaviable?page=1&per_page=40
+  body: none
+  auth: bearer
+}
+
+params:query {
+  page: 1
+  per_page: 40
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjdGl2ZSI6dHJ1ZSwiZW1haWwiOiJ1c2VyM0BleGFtcGxlLmNvbSIsImlkX3VzZXIiOjMsIm5hbWVfdGVuYW50IjoicGdzcWwiLCJ1c2VybmFtZSI6InVzZXIzIn0sIm5hbWVfdGVuYW50IjoicGdzcWwifQ.IHzdlFdxtzaNnl_5-QkZpcEvNi1g2juq82GTBl6fMUQ
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -4,12 +4,20 @@ meta {
   seq: 1
 }
 
-get {
-  url: 
-  body: none
+post {
+  url: 127.0.0.1:3000/api/login
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "email":"user3@example.com",
+    "password":"password3"
+  }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

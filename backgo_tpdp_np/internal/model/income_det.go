@@ -1,7 +1,6 @@
 package model
 
 type IncomeDet struct {
-	IncomeDetID    int     `json:"incomedet_id" gorm:"column:incomedet_id;primaryKey;autoIncrement" `
 	ProductID      int     `gorm:"column:product_id" json:"product_id"`
 	IncomeDetCount float64 `gorm:"column:incomedet_count" json:"incomedet_count"`
 	IncomeDetVal   float64 `gorm:"column:incomedet_val" json:"incomedet_val"`
