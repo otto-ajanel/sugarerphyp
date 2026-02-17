@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  env: development
+jwt:
+  secret: "changeme"
+database:
+  host: "localhost"
+  port: 5432
+  user: "postgres"
+  password: "49720012"
+  dbname: "erpsugar"
+  sslmode: "disable"
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""
