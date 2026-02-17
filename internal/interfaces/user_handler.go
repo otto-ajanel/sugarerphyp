@@ -4,14 +4,14 @@ import (
 	"context"
 	"sugarerpgo/internal/application"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 )
 
 type UserHandler struct {
 	QueryHandler *application.GetUsersHandler
 }
 
-func (h *UserHandler) GetUsers(c *fiber.Ctx) error {
+func (h *UserHandler) GetUsers(c fiber.Ctx) error {
 	tenantID := "1"
 
 	if tenantID == "" {

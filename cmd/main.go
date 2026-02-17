@@ -8,15 +8,13 @@ import (
 	"sugarerpgo/internal/infrastructure"
 	"sugarerpgo/internal/interfaces"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v3"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	app := fiber.New(fiber.Config{
-		Prefork: true,
-	})
-	app.Get("/health", func(c *fiber.Ctx) error {
+	app := fiber.New()
+	app.Get("/health", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{"status": "ok"})
 	})
 

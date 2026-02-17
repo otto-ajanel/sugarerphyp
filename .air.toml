@@ -2,7 +2,7 @@
 root = "."
 
 [build]
-  cmd = "go build -o tmp/main.exe ./cmd/main.go"
+  cmd = "go build -o tmp/main.exe ./main.go"
   bin = "tmp/main.exe"
   include_ext = [".go", ".yaml"]
   exclude_dir = ["tmp"]
