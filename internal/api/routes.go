@@ -16,6 +16,7 @@ func RegisterRoutes(app *fiber.App) {
 	// Grupo /api/v1 protegido por JWT/tenant middleware
 	v1 := app.Group("/api/v1", middleware.AuthRequired())
 	v1.Get("/user", handlers.GetUsers)
+	v1.Post("/user", handlers.CreateUser)
 	v1.Get("/permissionsbyuser", handlers.GetPermissionsByUser)
 	v1.Get("/categories", handlers.GetCategories)
 	v1.Post("/createcategory", handlers.CreateCategory)

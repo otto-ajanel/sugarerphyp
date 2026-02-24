@@ -1,14 +1,30 @@
 package handlers
 
 import (
+	"strconv"
 	"sugarerpgo/internal/service"
 
 	"github.com/gofiber/fiber/v3"
 )
 
 func GetUsers(c fiber.Ctx) error {
-	// Placeholder: en una futura iteración se puede implementar listado de usuarios.
-	return c.JSON(fiber.Map{"message": "GetUsers - pendiente de migrar lógica"})
+	ps := service.NewUserServCrud()
+	pageStr := c.Query("page", "1")
+	perPageStr := c.Query("per_page", "10")
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page < 1 {
+		page = 1
+	}
+	perPage, err := strconv.Atoi(perPageStr)
+	if err != nil || perPage < 1 {
+		perPage = 10
+	}
+	resp, err := ps.GetUsersPaginate(page, perPage)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+
+	}
+	return c.JSON(resp)
 }
 
 // GetPermissionsByUser obtiene las permissions del usuario autenticado.
@@ -38,4 +54,16 @@ func GetPermissionsByUser(c fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
 	}
 	return c.JSON(perms)
+}
+
+func CreateUser(c fiber.Ctx) error {
+	var reqFormUser map[string]interface{}
+	err := c.Bind().Body(&reqFormUser)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+
+	}
+
+	// echo back the request for now
+	return c.JSON(reqFormUser)
 }
