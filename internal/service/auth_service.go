@@ -28,16 +28,21 @@ func (s *AuthService) Login(email, password string) (map[string]interface{}, str
 		NameTenant string `gorm:"column:name_tenant"`
 	}
 
-	// Consulta: join tenants para obtener name_tenant
-	q := gdb.Table("users").Select("users.*, tenants.name_tenant").Joins("join tenants on tenants.id_tenant = users.id_tenant").Where("users.email = ? AND users.password = ? AND users.active = ?", email, password, true)
+	// Consulta: obtener usuario por email y activo (sin comparar password aquí)
+	q := gdb.Table("users").Select("users.*, tenants.name_tenant").Joins("join tenants on tenants.id_tenant = users.id_tenant").Where("users.email = ? AND users.active = ?", email, true)
 	if err := q.First(&result).Error; err != nil {
+		return nil, "", errors.New("invalid credentials or user not found")
+	}
+
+	// Comparar contraseña hasheada con bcrypt
+	if !ComparePassword(result.Password, password) {
 		return nil, "", errors.New("invalid credentials or user not found")
 	}
 
 	// Preparar respuesta pública (no exponer password)
 	userMap := map[string]interface{}{
 		"id_user":     result.IDUser,
-		"username":    result.Username,
+		"username":    result.Name + " " + result.Lastname,
 		"email":       result.Email,
 		"active":      result.Active,
 		"name_tenant": result.NameTenant,

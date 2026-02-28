@@ -36,4 +36,8 @@ func RegisterRoutes(app *fiber.App) {
 	v1.Get("/suppliers", handlers.GetSuppliers)
 	v1.Get("/productsaviable", handlers.GetProductsAviable)
 	v1.Get("/getimageproduct", handlers.GetImageProduct)
+
+	// cambiar estado de usuario (activo/inactivo)
+	v1.Put("/changestatususer/:user", handlers.ChangeStatusUser)
+	v1.Put("/user", handlers.UpdateUser)
 }

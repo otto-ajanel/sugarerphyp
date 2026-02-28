@@ -1,17 +1,10 @@
-# Configuración para air (hot reload)
+# .air.toml
 root = "."
+tmp_dir = "tmp"
 
 [build]
-  cmd = "go build -o tmp/main.exe ./main.go"
-  bin = "tmp/main.exe"
-  include_ext = [".go", ".yaml"]
+  cmd = "go build -o tmp\\main.exe ."
+  bin = "tmp\\main.exe"
+  include_ext = ["go"]
   exclude_dir = ["tmp"]
   delay = 1000
-
-[log]
-  color = "auto"
-  time = true
-
-[watch]
-  dirs = ["."]
-  exclude = ["tmp"]
